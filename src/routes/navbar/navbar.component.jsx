@@ -1,9 +1,12 @@
 import { Outlet, Link } from "react-router-dom";
-import { Fragment } from "react";
+import { Fragment , useContext } from "react";
+import { UserContext } from "../../components/contexts/user.context";
 import {ReactComponent as CrownLogo} from '../../assets/logo/crown.svg'
 import './navbar.component.style.scss'
 
 const NavigationBar = () => {
+    const {currentState} = useContext(UserContext)
+    console.log(currentState,"in nac");
     return (
         <Fragment>
             <div className="navigation">
