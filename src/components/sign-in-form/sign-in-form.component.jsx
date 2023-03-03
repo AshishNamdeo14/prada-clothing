@@ -5,7 +5,6 @@ import { signInWithGooglePopup,
          signInAuthUserWithSignInandPassword} from "../../utils/firebase/firebase.utils";
 import '../sign-in-form/sign-in-form.styles.scss'
 import Button from "../button/button.component";
-import { UserContext } from "../contexts/user.context";
 
 
 
@@ -16,11 +15,10 @@ const defaultformfields = {
 
 
 const SignInForm = () => {
-    console.log("Hit")
     const [formfields, setformfields] = useState(defaultformfields);
     const {  password, email } = formfields;
 
-    const {setCurrentState} = useContext(UserContext)
+ 
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -31,12 +29,16 @@ const SignInForm = () => {
         setformfields(defaultformfields)
     }
 
+    const SignInWithGoogle = async () => {
+         await signInWithGooglePopup();
+       
+    };
+
     const handleSubmit = async (event) =>{
         event.preventDefault();
         try {
             const { user } = await signInAuthUserWithSignInandPassword(email,password)
             console.log(user);
-            setCurrentState(user)
 
         resetFormFields()
         } catch (error) {
@@ -54,12 +56,7 @@ const SignInForm = () => {
         }
     }
 
-    const SignInWithGoogle = async () => {
-        debugger
-        const { user } = await signInWithGooglePopup();
-        console.log(user);
-        await creatUserDocumentFromAuth(user);
-    };
+   
 
     return (
         <div className="sign-up-container">
