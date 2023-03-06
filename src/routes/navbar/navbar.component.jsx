@@ -5,9 +5,10 @@ import { UserContext } from "../../components/contexts/user.context";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropDown from "../../components/cart-dropdown/cart-dropdown.component";
 import {ReactComponent as CrownLogo} from '../../assets/logo/crown.svg'
-import './navbar.component.style.scss'
+import './navbar.component.style'
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 import { CartContext } from "../../components/contexts/cart.context";
+import { NavigationContainer,NavLink,NavLinksContainer,LogoContainer } from "./navbar.component.style.jsx";
 
 
 const NavigationBar = () => {
@@ -17,24 +18,24 @@ const NavigationBar = () => {
 
     return (
         <Fragment>
-            <div className="navigation">
-                <Link className="logo-container" to='/'>
+            <NavigationContainer>
+                <LogoContainer to='/'>
                     <CrownLogo className="logo"/>
-                </Link>
-                <div className="nav-links-container">
-                    <Link className="nav-link-shop" to="shop">
+                </LogoContainer>
+                <NavLinksContainer>
+                    <LogoContainer to="shop">
                         SHOP
-                    </Link>
+                    </LogoContainer>
                     { currentState ? 
                     (
-                        <span className="nav-ling-signin mine" onClick={signOutUser}>{' '}SIGN OUT{' '}</span>
-                    ):(<Link className="nav-link-signin" to="auth">
+                        <NavLink as='span' onClick={signOutUser}>{' '}SIGN OUT{' '}</NavLink>
+                    ):(<NavLink to="auth">
                     SIGN IN
-                </Link>)}
+                </NavLink>)}
             <CartIcon/>
-                </div>
+                </NavLinksContainer>
                 {isCartOpen && <CartDropDown/>}
-            </div>
+            </NavigationContainer>
             <Outlet />
         </Fragment>
     );
